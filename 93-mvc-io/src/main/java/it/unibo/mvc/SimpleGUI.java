@@ -21,7 +21,10 @@ public final class SimpleGUI {
     private final JFrame frame = new JFrame(TITLE);
     private static final int PROPORTION = 3;
     private final Controller controller = new SimpleController();
-    
+
+    /**
+     * Constructor that initialize the GUI.
+     */
     public SimpleGUI() {
         final JPanel canvas = new JPanel();
         canvas.setLayout(new BorderLayout());
@@ -44,25 +47,27 @@ public final class SimpleGUI {
         print.addActionListener(new ActionListener() {
 
             @Override
-            public void actionPerformed(ActionEvent clicked) {
+            public void actionPerformed(final ActionEvent clicked) {
                 controller.setNextString(textField.getText());
                 controller.printCurrentString();
             }
-            
         });
-        
+
         showHistory.addActionListener(new ActionListener() {
             @Override
-            public void actionPerformed(ActionEvent e) {  
+            public void actionPerformed(final ActionEvent e) {  
                 final StringBuffer buffer = new StringBuffer();
-                for(final String line : controller.getHistory()) {
-                   buffer.append(line).append("\n");
+                for (final String line : controller.getHistory()) {
+                   buffer.append(line).append('\n');
                 }
                 textArea.setText(buffer.toString());
             }
         });
     }
 
+    /**
+     * Display the frame implemented in the constructor.
+     */
     private void display() {
         final Dimension screen = Toolkit.getDefaultToolkit().getScreenSize();
         final int sw = (int) screen.getWidth();
@@ -71,7 +76,11 @@ public final class SimpleGUI {
         frame.setVisible(true);
     }
 
-    public static void main(String[] args) {
+    /**
+     * Main method for initializing our GUI.
+     * @param args in this case nothing
+     */
+    public static void main(final String[] args) {
         new SimpleGUI().display();
     }
 }
