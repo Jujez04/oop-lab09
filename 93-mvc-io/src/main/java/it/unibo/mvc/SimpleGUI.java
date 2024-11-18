@@ -55,7 +55,7 @@ public final class SimpleGUI {
 
         showHistory.addActionListener(new ActionListener() {
             @Override
-            public void actionPerformed(final ActionEvent e) {  
+            public void actionPerformed(final ActionEvent e) {
                 final StringBuffer buffer = new StringBuffer();
                 for (final String line : controller.getHistory()) {
                    buffer.append(line).append('\n');

@@ -55,7 +55,7 @@ public final class SimpleController implements Controller {
         if (Objects.isNull(this.nextString)) {
             throw new IllegalStateException();
         }
-        //System.out.println(this.nextString);
+        System.out.println(this.nextString); //NOPMD
         this.history.add(nextString);
     }
 
