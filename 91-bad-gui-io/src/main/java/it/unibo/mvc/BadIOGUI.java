@@ -10,15 +10,13 @@ import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.io.PrintStream;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
-import java.util.List;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Random;
 
 /**
@@ -81,15 +79,13 @@ public class BadIOGUI {
 
             @Override
             public void actionPerformed(ActionEvent e) {
-                System.out.println("Reading on file");
-                try (final BufferedReader br = new BufferedReader(
-                    new InputStreamReader(
-                        new FileInputStream(PATH), "UTF-8"
-                    )
-                )) {
-                   System.out.println(br.readLine()); 
-                } catch (IOException e2) {
-                    e2.printStackTrace();
+                try {
+                    final Path path = Paths.get(PATH);
+                    for (final String line : Files.readAllLines(path, StandardCharsets.UTF_8)) {
+                        System.out.println(line);
+                    }
+                } catch (IOException corruptedFile) {
+                    corruptedFile.getMessage();
                 }
             }
             
