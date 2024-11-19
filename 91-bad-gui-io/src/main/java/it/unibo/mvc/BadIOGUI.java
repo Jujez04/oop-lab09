@@ -78,17 +78,16 @@ public class BadIOGUI {
         read.addActionListener(new ActionListener() {
 
             @Override
-            public void actionPerformed(ActionEvent e) {
+            public void actionPerformed(final ActionEvent e) {
                 try {
                     final Path path = Paths.get(PATH);
                     for (final String line : Files.readAllLines(path, StandardCharsets.UTF_8)) {
-                        System.out.println(line);
+                        System.out.println(line); //NOPMD
                     }
-                } catch (IOException corruptedFile) {
-                    corruptedFile.getMessage();
+                } catch (final IOException corruptedFile) {
+                    System.err.println(corruptedFile.getMessage());  //NOPMD
                 }
             }
-            
         });
     }
 
