@@ -7,7 +7,8 @@ import java.io.*;
  */
 public class Controller {
 
-    private final static String STD_FILE = System.getProperty("user.home") + "output.txt";
+    private final static String SEPARATOR = System.getProperty("file.separator");
+    private final static String STD_FILE = System.getProperty("user.home") + SEPARATOR + "output.txt";
     private File currentFile;
 
     public Controller(File file) {
