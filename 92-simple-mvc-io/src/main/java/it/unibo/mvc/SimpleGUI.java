@@ -9,6 +9,7 @@ import java.io.IOException;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
 
@@ -19,12 +20,13 @@ import javax.swing.JTextArea;
  */
 public final class SimpleGUI {
 
-    private final static String TITLE = "My first Java graphical interface";
-    private final static int PROPORTION = 3;
+    private static final String TITLE = "My first Java graphical interface";
+    private static final int PROPORTION = 3;
     private final JFrame frame = new JFrame(TITLE);
     private final Controller controller = new Controller();
-    
-
+    /**
+     * Constructor for building the new GUI.
+     */
     public SimpleGUI() {
         final JPanel canvas = new JPanel();
         final JButton save = new JButton("Save");
@@ -40,11 +42,11 @@ public final class SimpleGUI {
         save.addActionListener(new ActionListener() {
 
             @Override
-            public void actionPerformed(ActionEvent e) {
+            public void actionPerformed(final ActionEvent e) {
                 try {
                     controller.writeOnCurrentFile(textArea.getText());
                 } catch (IOException corruptedFile) {
-                    corruptedFile.printStackTrace();
+                    JOptionPane.showMessageDialog(frame, corruptedFile.getMessage());
                 }
             }
         });
@@ -61,6 +63,10 @@ public final class SimpleGUI {
         frame.setVisible(true);
     }
 
+    /**
+     * Main method.
+     * @param args
+     */
     public static void main(final String[] args) {
         new SimpleGUI().display();
     }

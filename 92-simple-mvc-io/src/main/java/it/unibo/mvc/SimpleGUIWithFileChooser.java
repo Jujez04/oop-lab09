@@ -21,12 +21,13 @@ import javax.swing.JTextField;
  */
 public final class SimpleGUIWithFileChooser {
 
-    private final static String TITLE = "My second Java graphical interface";
-    private final static int PROPORTION = 3;
+    private static final String TITLE = "My second Java graphical interface";
+    private static final int PROPORTION = 3;
     private final JFrame frame = new JFrame(TITLE);
     private final Controller controller = new Controller();
-    
-
+    /**
+     * Constructor for building the new GUI.
+     */
     public SimpleGUIWithFileChooser() {
         final JPanel canvas = new JPanel();
         final JPanel north = new JPanel();
@@ -34,7 +35,6 @@ public final class SimpleGUIWithFileChooser {
         final JButton browse = new JButton("Browse...");
         final JTextArea textArea = new JTextArea();
         final JTextField textField = new JTextField();
-        
         canvas.setLayout(new BorderLayout());
         north.setLayout(new BorderLayout());
         frame.setContentPane(canvas);
@@ -51,17 +51,17 @@ public final class SimpleGUIWithFileChooser {
          */
         save.addActionListener(new ActionListener() {
             @Override
-            public void actionPerformed(ActionEvent e) {
+            public void actionPerformed(final ActionEvent e) {
                 try {
                     controller.writeOnCurrentFile(textArea.getText());
                 } catch (IOException corruptedFile) {
-                    corruptedFile.printStackTrace();
+                    JOptionPane.showMessageDialog(frame, corruptedFile.getMessage());
                 }
             }
         });
         browse.addActionListener(new ActionListener() {
             @Override
-            public void actionPerformed(ActionEvent e) {
+            public void actionPerformed(final ActionEvent e) {
                 final JFileChooser fileChooser = new JFileChooser();
                 switch (fileChooser.showSaveDialog(frame)) {
                     case JFileChooser.APPROVE_OPTION:
@@ -89,6 +89,10 @@ public final class SimpleGUIWithFileChooser {
         frame.setVisible(true);
     }
 
+    /**
+     * Main method.
+     * @param args
+     */
     public static void main(final String[] args) {
         new SimpleGUIWithFileChooser().display();
     }
