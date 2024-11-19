@@ -1,10 +1,19 @@
 package it.unibo.mvc;
 
-import java.awt.*;
-import java.awt.event.*;
-import javax.swing.*;
-import java.io.*;
+import java.awt.BorderLayout;
+import java.awt.Dimension;
+import java.awt.Toolkit;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.IOException;
 
+import javax.swing.JButton;
+import javax.swing.JFileChooser;
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JTextArea;
+import javax.swing.JTextField;
 
 /**
  * A very simple program using a graphical interface.
@@ -25,6 +34,7 @@ public final class SimpleGUIWithFileChooser {
         final JButton browse = new JButton("Browse...");
         final JTextArea textArea = new JTextArea();
         final JTextField textField = new JTextField();
+        
         canvas.setLayout(new BorderLayout());
         north.setLayout(new BorderLayout());
         frame.setContentPane(canvas);
@@ -40,13 +50,29 @@ public final class SimpleGUIWithFileChooser {
          * Handlers
          */
         save.addActionListener(new ActionListener() {
-
             @Override
             public void actionPerformed(ActionEvent e) {
                 try {
                     controller.writeOnCurrentFile(textArea.getText());
                 } catch (IOException corruptedFile) {
                     corruptedFile.printStackTrace();
+                }
+            }
+        });
+        browse.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                final JFileChooser fileChooser = new JFileChooser();
+                switch (fileChooser.showSaveDialog(frame)) {
+                    case JFileChooser.APPROVE_OPTION:
+                        controller.setCurrentFile(fileChooser.getSelectedFile());
+                        textField.setText(controller.getFilePath());
+                        break;
+                    case JFileChooser.CANCEL_OPTION:
+                        break;
+                    default:
+                        JOptionPane.showMessageDialog(frame, "An error has occurred");
+                        break;
                 }
             }
         });
