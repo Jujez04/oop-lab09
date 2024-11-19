@@ -52,7 +52,7 @@ public class Controller {
 
         try (final BufferedWriter bw = new BufferedWriter(
 				new OutputStreamWriter(
-					new FileOutputStream(this.currentFile),"UTF-16"))) {
+					new FileOutputStream(this.currentFile),"UTF-8"))) {
             bw.write(content);
         } 
     }

@@ -1,6 +1,10 @@
 package it.unibo.mvc;
 
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.IOException;
+
 import javax.swing.*;
 
 /**
@@ -9,9 +13,10 @@ import javax.swing.*;
  */
 public final class SimpleGUI {
 
-    private final static String TITLE = SimpleGUI.class.getSimpleName();
+    private final static String TITLE = "My first Java graphical interface";
     private final static int PROPORTION = 3;
     private final JFrame frame = new JFrame(TITLE);
+    private final Controller controller = new Controller();
     
 
     public SimpleGUI() {
@@ -23,8 +28,25 @@ public final class SimpleGUI {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         canvas.add(textArea, BorderLayout.CENTER);
         canvas.add(save, BorderLayout.SOUTH);
+        /*
+         * Handlers
+         */
+        save.addActionListener(new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                try {
+                    controller.writeOnCurrentFile(textArea.getText());
+                } catch (IOException corruptedFile) {
+                    corruptedFile.printStackTrace();
+                }
+            }
+        });
     }
 
+    /**
+     * Method that displays the frame implemented in the constructor.
+     */
     public void display() {
         final Dimension sizeScreen = Toolkit.getDefaultToolkit().getScreenSize();
         final int width = (int) sizeScreen.getWidth();
